@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8"/>
+<title>Prijava</title>
+</head>
+<body>
+<div align="center">
+	<form th:action="@{/logout}" method="post">
+		<input type="submit" value="Sign Out" />
+	</form>
+    <h1>PRIJAVA</h1>
+    <a th:if="${prijavljen.empty} and ${!raspolozivo.empty} and ${dodijeljeno.empty}" href="/prijava/novi">Kreiraj novu prijavu</a>
+    <a th:if="${raspolozivo.empty} and ${dodijeljeno.empty}">Nema raspoloživih završnih radova</a>
+    <a th:if="${!prijavljen.empty} and ${dodijeljeno.empty}">Završnih rad je prijavljen</a>
+    <a th:if="${!dodijeljeno.empty}">Završnih rad je dodijeljen</a>
+    <br/><br/>
+    <p> Dobrodošli <b>[[${#request.userPrincipal.principal.username}]]</b></p>
+    <table border="1" cellpadding="50">
+        <thead>
+            <tr>
+                <th>Email studenta</th>
+                <th>Naziv završnog rada</th>
+                <th>Status</th>
+                <th>Akcija</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:if="${prijava.email} == ${#request.userPrincipal.principal.username}" th:each="prijava : ${popisPrijava}">
+                <td th:text="${prijava.email}">Email studenta</td>
+                <td th:text="${prijava.naziv}">Naziv završnog rada</td>
+                <td th:if="${!popisNaziva.contains(prijava.naziv)}">Prijavljen</td>
+                <td th:if="${popisNaziva.contains(prijava.naziv)}">Dodijeljen</td>
+                <td>
+				    <a th:if="${prijava.email} == ${#request.userPrincipal.principal.username} and ${popisNaziva.contains(prijava.naziv)}" th:href="@{'/zavrsnirad/dokumentacija/' + ${prijava.naziv}}" >Dokumentacija</a>
+                    <a th:if="${prijava.email} == ${#request.userPrincipal.principal.username} and ${!popisNaziva.contains(prijava.naziv)}" th:href="@{'/prijava/brisi/' + ${prijava.id}}" th:onclick="if(!(confirm('Ste signurni?') )) return false">Briši</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>   
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8"/>
+<title>Završni rad</title>
+</head>
+<body>
+<div align="center">
+	<form th:action="@{/logout}" method="post">
+		<input type="submit" value="Sign Out" />
+	</form>
+    <h1>POPIS ZAVRŠNIH RADOVA</h1>
+    <a href="/zavrsnirad/novi">Kreiraj novi završni rad</a>
+    <br/><br/>
+    <table border="1" cellpadding="50">
+        <thead>
+            <tr>
+            	<th>Email profesora</th>
+            	<th>Email studenta</th>
+                <th>Naziv</th>
+                <th>Opis</th>
+                <th>Godina</th>
+                <th>Studij</th>
+                <th>Status</th>
+                <th>Datum</th>
+                <th>Akcija</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="zavrsnirad : ${popisZavrsniRad}">
+                <td th:text="${zavrsnirad.profesor}">Email profesora</td>
+                <td><a th:href="@{'/zavrsnirad/student/' + ${zavrsnirad.student}}" th:text="${zavrsnirad.student}"></a></td>
+                <td th:text="${zavrsnirad.naziv}">Naziv</td>
+                <td th:text="${zavrsnirad.opis}">Opis</td>
+                <td th:text="${zavrsnirad.godina}">Godina</td>
+                <td th:text="${zavrsnirad.studij}">Studij</td>
+                <td th:text="${zavrsnirad.status}">Status</td>
+                <td th:text="${zavrsnirad.datum}">Datum</td>
+                <td>
+                    <a th:if="${zavrsnirad.profesor} == ${#request.userPrincipal.principal.username}" th:href="@{'/zavrsnirad/uredi/' + ${zavrsnirad.id}}">Uredi</a>
+                    &nbsp;&nbsp;
+                    <a th:if="${zavrsnirad.profesor} == ${#request.userPrincipal.principal.username}" th:href="@{'/zavrsnirad/brisi/' + ${zavrsnirad.id}}" th:onclick="if(!(confirm('Ste signurni?') )) return false">Briši</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <h1>POPIS PRIJAVA</h1>
+    <table border="1" cellpadding="50">
+        <thead>
+            <tr>
+                <th>Email studenta</th>
+                <th>Naziv završnog rada</th>
+                <th>Status</th>
+                <th>Akcija</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="prijava : ${popisPrijava}">
+                <td th:text="${prijava.email}">Email studenta</td>
+                <td th:text="${prijava.naziv}">Naziv završnog rada</td>
+                <td th:if="${!popisNaziva.contains(prijava.naziv)}">Slobodan</td>
+                <td th:if="${popisNaziva.contains(prijava.naziv)}">Dodijeljen</td>
+                <td>
+					<a th:if="${prijava.profesor} == ${#request.userPrincipal.principal.username} and ${!popisNaziva.contains(prijava.naziv)}" th:href="@{'/zavrsnirad/dodjeli/' + ${prijava.naziv} + '/' + ${prijava.email}}">Dodjeli</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <h1>DODIJELJENO</h1>
+    <table border="1" cellpadding="50">
+        <thead>
+            <tr>
+                <th>Email studenta</th>
+                <th>Naziv završnog rada</th>
+                <th>Akcija</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:if="${zavrsnirad.student}" th:each="zavrsnirad : ${popisZavrsniRad}">
+                <td th:text="${zavrsnirad.student}">Email studenta</td>
+                <td th:text="${zavrsnirad.naziv}">Naziv završnog rada</td>
+				<td>
+				    <a th:if="${zavrsnirad.profesor} == ${#request.userPrincipal.principal.username}" th:href="@{'/zavrsnirad/dokumentacija/' + ${zavrsnirad.naziv}}" >Dokumentacija</a>
+                    <a th:if="${zavrsnirad.profesor} == ${#request.userPrincipal.principal.username}" th:href="@{'/zavrsnirad/oslobodi/' + ${zavrsnirad.id}}" th:onclick="if(!(confirm('Ste signurni?') )) return false">Briši</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>   
+</body>
+</html>

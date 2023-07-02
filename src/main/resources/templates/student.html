@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Student</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/registration.css}"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<form th:action="@{/zavrsnirad/}" method="get">
+	    <button class="btn btn-md btn-warning btn-block" type="Submit">Otiđi na prijašnju stranicu</button>
+	</form>
+	<div align="center">
+		<h1>Podaci o studentu</h1>
+		<br />
+		<form th:object="${student}" method="post">
+
+			<table border="0" cellpadding="10" style="width: 30%; margin-right: 30%; margin-left: auto;" >
+				<tr>
+					<td>Email studenta:</td>
+					<td>
+						<p th:text="*{email}" />
+					</td>
+				</tr>
+				<tr>
+					<td>Ime:</td>
+					<td>
+						<p th:text="*{ime}" />
+					</td>
+				</tr>
+				<tr>
+					<td>Prezime:</td>
+					<td>
+						<p th:text="*{prezime}" />
+					</td>
+				</tr>
+				<tr>
+					<td>Godina:</td>
+					<td>
+						<p th:text="*{godina}" />
+					</td>
+				</tr>
+				<tr>
+					<td>Studij:</td>
+					<td>
+						<p th:text="*{studij}" />
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
+</body>
+</html>

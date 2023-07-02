@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Registration Form</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/registration.css}"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<form th:action="@{/}" method="get">
+    <button class="btn btn-md btn-warning btn-block" type="Submit">Otiđi na stranicu za prijavu</button>
+</form>
+
+<div class="container">
+	<br/><br/><br/><br/><br/><br/>
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <form autocomplete="off" action="#" th:action="@{/registracija_student}"
+                  th:object="${user}" method="post" class="form-horizontal"
+                  role="form">
+                <h2>Registracija studenta</h2>
+                <div class="form-group">
+                    <div class="col-sm-9">
+                        <label th:if="${#fields.hasErrors('ime')}" th:errors="*{ime}"
+                               class="validation-message"></label>
+                        <input type="text" th:field="*{ime}" placeholder="Ime korisnika"
+                               class="form-control"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-9">
+                        <label th:if="${#fields.hasErrors('prezime')}" th:errors="*{prezime}"
+                               class="validation-message"></label>
+                        <input type="text" th:field="*{prezime}"
+                               placeholder="Prezime" class="form-control"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-9">
+                        <input type="text" th:field="*{email}" placeholder="Email"
+                               class="form-control"/> <label
+                            th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+                            class="validation-message"></label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-9">
+                        <input type="password" th:field="*{password}"
+                               placeholder="Lozinka" class="form-control"/> <label
+                            th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
+                            class="validation-message"></label>
+                    </div>
+                </div>
+                
+                <div class="form-group row">
+				<label class="col-sm-9">Godina: </label>
+					<div class="col-sm-9">
+						<select th:field="*{godina}">
+	    					<option th:value="'2019/2020'" th:text="'2019/2020'"></option>
+	    					<option th:value="'2020/2021'" th:text="'2020/2021'"></option>
+	    					<option th:value="'2021/2022'" th:text="'2021/2022'"></option>
+	    					<option th:value="'2022/2023'" th:text="'2022/2023'"></option>
+						</select>
+					</div>
+				</div>
+			
+				<div class="form-group row">
+				<label class="col-sm-9">Studij: </label>
+					<div class="col-sm-9">
+						<select th:field="*{studij}">
+	    					<option th:value="'Računarstvo'" th:text="Računarstvo"></option>
+	    					<option th:value="'Menadžment'" th:text="Menadžment"></option>
+						</select>
+					</div>
+				</div>
+
+                <div class="form-group">
+                    <div class="col-sm-9">
+                        <button type="submit" class="btn btn-primary btn-block">REGISTRACIJA</button>
+                    </div>
+                </div>
+
+                <h2><span class="text-success" th:utext="${successMessage}"></span></h2>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

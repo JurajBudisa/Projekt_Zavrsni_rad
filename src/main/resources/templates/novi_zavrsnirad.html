@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<title>Kreiranje novog završnog rada</title>
+</head>
+<body>
+	<div align="center">
+		<h1>Upišite podatke za novi završni rad</h1>
+		<br />
+		<form action="#" th:action="@{/zavrsnirad/novi}" th:object="${zavrsnirad}" method="post">
+
+			<table border="0" cellpadding="10">
+				<tr>
+					<td>Naziv završnog rada:</td>
+					<td><input type="text" th:field="*{naziv}" /></td>
+				</tr>
+				<tr>
+					<td>Opis:</td>
+					<td><textarea style="resize:none" cols="70" rows="15" type="text" th:field="*{opis}" /></td>
+				</tr>
+				<tr>
+					<td>Akademska godina:</td>
+					<td>
+					<select th:field="*{godina}">
+    					<option th:value="'2019/2020'" th:text="'2019/2020'"></option>
+    					<option th:value="'2020/2021'" th:text="'2020/2021'"></option>
+    					<option th:value="'2021/2022'" th:text="'2021/2022'"></option>
+    					<option th:value="'2022/2023'" th:text="'2022/2023'"></option>
+					</select>
+					</td>
+				</tr>
+				<tr>
+					<td>Studij:</td>
+					<td>
+					<select th:field="*{studij}">
+    					<option th:value="'Računarstvo'" th:text="Računarstvo"></option>
+    					<option th:value="'Menadžment'" th:text="Menadžment"></option>
+					</select>
+					</td>
+				</tr>
+				
+				<input type="hidden" th:value="'Slobodan'" name=status />
+				<input type="hidden" th:value="${#request.userPrincipal.principal.username}" name=profesor /></td>
+				
+				<tr>
+					<td colspan="2"><button type="submit">Snimi</button> </td>
+				</tr>
+			</table>
+		</form>
+	</div>
+</body>
+</html>

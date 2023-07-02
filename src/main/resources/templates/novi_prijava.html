@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<title>Kreiranje nove prijave</title>
+</head>
+<body>
+	<div align="center">
+		<h1>Izaberi završni rad</h1>
+		<br />
+		<form action="#" th:action="@{/prijava/novi}" th:object="${prijava}" method="post">
+
+			<table border="0" cellpadding="10">
+				<tr>
+					<td><input type="hidden" th:value="${#request.userPrincipal.principal.username}" name=email /></td>
+				</tr>
+				
+				<div class="form-group blu-margin">
+				    <select class="form-control" name="naziv">
+				    <option th:each="zavrsnirad : ${popisZavrsniRad}" th:value="${zavrsnirad.naziv}" th:text="${zavrsnirad.naziv}"></option>
+				    </select>
+				</div>
+							
+				<tr>
+					<td colspan="2"><button type="submit">Snimi</button> </td>
+				</tr>
+			</table>
+		</form>
+	</div>
+</body>
+</html>
